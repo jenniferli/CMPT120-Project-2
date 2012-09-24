@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html>
+<!-- Jennifer Li 
+     September 26, 2012
+     Introduction to Programming
+     Project 2: Game v0.2 -->
+   <head>
+      <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+      <meta name="author" content="Jennifer Li" />
+      <title>S.O.S</title>
+      <style type = "text/css">
+          body     { background-image: url('http://img.photobucket.com/albums/v259/jennstahmui/GameBg.jpg'); }
+          h1       { font-family: georgia;
+                     font-size: 25pt;
+                     color: white;
+                     background: black; }
+          textarea { font-family: arial;
+                     font-size: 11pt;}
+        </style>
+        <script type="text/JavaScript">
+           var score = 0;
+           var hasVisitedNorth = false;
+           var hasVisitedSouth = false;
+           var hasVisitedEast = false;
+           var hasVisitedWest = false;
+        
+           function btn_click (btnNum) {
+             var message1 = "A few feet ahead of you is a pond. Next to the pond is a well.";
+             var message2 = "Going south."
+             var message3 = "Going east."
+             var message4 = "Going west."
+             
+             if (btnNum === 1) {
+                updateText (message1);
+                if (!hasVisitedNorth) {
+                   score = score + 5;
+                   hasVisitedNorth = true;
+                }
+             }
+             else {
+                if (btnNum === 2) {
+                   updateText (message2);
+                   if (!hasVisitedSouth) {
+                      score = score + 5;
+                      hasVisitedSouth = true;
+                   }     
+                }
+             }
+            
+            if (btnNum === 3) {
+               updateText (message3);
+               if (!hasVisitedEast) {
+                  score = score + 5;
+                  hasVisitedEast = true;
+               }
+            }
+            else {
+               if (btnNum === 4) {
+                  updateText (message4);
+                  if (!hasVisitedWest) {
+                     score = score + 5;
+                     hasVisitedWest = true;
+                  }
+               }
+            }
+            
+            if (btnNum === 5) {
+               updateText (score);
+            }
+            else {
+            }
+           }
+          
+           function updateText(message) {
+             var ta = document.getElementById("taGame");
+             ta.value = message +  "\n" + "\n" + ta.value; 
+           }
+          
+           function getScore(message) {
+              var ta = document.getElementbyId("taGame");
+              ta.value = score; 
+           }
+        </script>
+   </head>
+   <body>
+      <h1>S.O.S</h1>
+          
+      <textarea id="taGame" rows="8" cols="50">The pilot lost control of the plane that you were on. Everyone died in the crash, except for you. You are currently stranded on an unknown island. There are different items hidden throughout the island that are essential for your survival. As you embark on your journey through the island to search for these items, please be aware that there are mysterious creatures lurking around. Good luck!  </textarea><br>
+
+      <input type="button"
+               value="North"
+               onclick="btn_click(1);">
+             
+      <input type="button"
+               value="South"
+               onclick="btn_click(2)">
+                 
+      <input type="button"
+               value="East"
+               onclick="btn_click(3)">
+                 
+      <input type="button"
+               value="West"
+               onclick="btn_click(4)">
+                 
+      <input type="button"
+               value="Score"
+               onclick="btn_click(5)">
+             
+      <hr>
+         <a href="mailto:Jennifer.Li1@marist.edu">Send e-mail.</a>
+   </body>
+</html>
