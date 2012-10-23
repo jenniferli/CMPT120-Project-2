@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html>
+    <!-- Jennifer Li
+    October 20, 2012
+    Introduction to Programming
+    Project 2: Game v0.4 -->
+   <head>
+      <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+      <meta name="author" content="Jennifer Li" />
+      <title>S.O.S</title>
+      <style type = "text/css">
+          body { background-image: url('http://img.photobucket.com/albums/v259/jennstahmui/GameBg.jpg'); }
+          h1 { font-family: georgia;
+                     font-size: 25pt;
+                     color: white;
+                     background: black; }
+          textarea { font-family: arial;
+                     font-size: 11pt;}
+        </style>
+        <script type="text/JavaScript">
+        
+           // Directional constants used in the move 
+           // function and the button-click event handlers.
+           var NORTH           = 1;   
+           var SOUTH           = 2;   
+           var EAST            = 3;   
+           var WEST            = 4;
+           var SCORE           = 5;
+           
+           // Location constants
+           
+           var currentLocation = 00;
+           var start           = 00;   
+           var lake            = 10;   
+           var cave            = 20;   
+           var hut             = 30;
+           var forest          = 40;
+           var beach           = 50;
+           var underWater      = 60;
+    
+           
+           // Write a function for each location to keep track of the player's location. 
+           // Use and | or.
+           
+           var score = 0; 
+           var hasVisitedLake       = false;
+           var hasVisitedCave       = false;
+           var hasVisitedHut        = false;
+           var hasVisitedForest     = false;
+           var hasVisitedBeach      = false;
+           var hasVisitedUnderWater = false;
+        
+           function btn_click (btnValue) {
+              var userInput = document.getElementById("txtInput").value;
+              var msg = "";
+              document.getElementById("txtInput").value = "";
+              var userInputOk = false;
+             
+              if (btnValue === NORTH || userInput === "N" || userInput === "n" || userInput === "North" || userInput === "north") {
+                  userInputOk = true;
+                 if (currentLocation === start) {
+                    currentLocation = lake;
+                    document.getElementById("Westbtn").disabled=true;
+                    document.getElementById("Eastbtn").disabled=true;
+                    msg = "You have reached the lake. At the bottom of the lake, you will find a sword chained to a rock. In order to obtain the sword, you will need a key to unlock the chain.";
+                    if (!hasVisitedLake) {
+                       score = score + 5;
+                       hasVisitedLake = true;
+                    }
+                    updateDisplay (msg);
+                 }
+                 else if (currentLocation === lake) {
+                    currentLocation = cave;
+                    document.getElementById("Northbtn").disabled=true;
+                    msg = "You are currently in a cave that is on the other side of the lake. You are engulfed in darkness. To your right is a crevice, where you will find a flashlight. Use it wisely because only two hours of the battery life is left. Also, be very careful as you make your way through the cave. Creatures and traps lie in wait.";               
+                    if (!hasVisitedCave) {
+                       score = score + 5;
+                       hasVisitedCave = true;
+                    }
+                    updateDisplay (msg);
+                 } 
+                 else if (currentLocation === cave || currentLocation === forest || currentLocation === hut) {
+                    msg = "The path is blocked.";
+                    updateDisplay (msg); 
+                 }
+                 else if (currentLocation === beach) {
+                    currentLocation = start;
+                    document.getElementById("Eastbtn").disabled=false;
+                    document.getElementById("Westbtn").disabled=false;
+                    msg = "You are back at the starting point.";
+                    updateDisplay (msg);
+                 }
+                 else { 
+                    currentLocation = beach;
+                    document.getElementById("Southbtn").disabled=false;
+                    msg = "You have arrived at the deserted beach. As you scan your new surrounding, you spot a boat out on the water. Proceed north and into the water. You might find something valuable on the boat.";
+                    updateDisplay (msg);
+                 }
+              }
+             
+              else if (btnValue === SOUTH || userInput === "S" || userInput === "s" || userInput === "South" || userInput === "south") {
+                       userInputOk = true;
+                 if (currentLocation === cave) {
+                     currentLocation = lake; 
+                     document.getElementById("Northbtn").disabled=false;
+                     msg = "Cave to lake.";
+                     updateDisplay (msg); 
+                 } 
+                 else if (currentLocation === lake) {
+                     currentLocation = start;
+                     document.getElementById("Eastbtn").disabled=false;
+                     document.getElementById("Westbtn").disabled=false;
+                     msg = "Back at starting point";
+                     updateDisplay (msg);
+                 } 
+                 else if (currentLocation === start) {
+                     currentLocation = beach;
+                     document.getElementById("Eastbtn").disabled=true;
+                     document.getElementById("Westbtn").disabled=true;
+                     msg = "Current location to beach.";
+                     if (!hasVisitedBeach) {
+                        score = score + 5;
+                        hasVisitedBeach = true;
+                     }
+                     updateDisplay (msg);
+                 } 
+                 else if (currentLocation === beach) {
+                     currentLocation = underWater;
+                     document.getElementById("Southbtn").disabled=true;
+                     msg = "Under water.";
+                     if (!hasVisitedUnderWater) {
+                        score = score + 5;
+                        hasVisitedUnderWater = true;
+                     }
+                     updateDisplay (msg);
+                 } 
+                 else {
+                    msg = "You can go no further."
+                    updateDisplay (msg);
+                 }
+              }         
+               
+            
+              else if (btnValue === EAST || userInput === "E" || userInput === "e" || userInput === "East" || userInput === "east") {
+                       userInputOk = true;
+                 if (currentLocation === start) {
+                    currentLocation = hut;
+                    document.getElementById("Eastbtn").disabled=true;
+                    document.getElementById("Northbtn").disabled=true;
+                    document.getElementById("Southbtn").disabled=true;
+                    msg = "Hut.";
+                    if (!hasVisitedHut) {
+                        score = score + 5;
+                        hasVisitedHut = true;    
+                    }    
+                    updateDisplay (msg);          
+                 }
+                 else if (currentLocation === forest) {
+                    currentLocation = start;
+                    document.getElementById("Northbtn").disabled=false;
+                    document.getElementById("Southbtn").disabled=false;
+                    document.getElementById("Westbtn").disabled=false;
+                    msg = "You are back at the starting point.";
+                    updateDisplay (msg);
+                 }         
+                 else {
+                    msg = "You cannot go anywhere else."
+                    updateDisplay (msg);
+                 }
+              }
+              
+              else if (btnValue === WEST ||  userInput === "W" || userInput === "w" || userInput === "West" || userInput === "west") {
+                       userInputOk = true;
+                 if (currentLocation === hut) {
+                    currentLocation = start;
+                    document.getElementById("Northbtn").disabled=false;
+                    document.getElementById("Southbtn").disabled=false;
+                    document.getElementById("Eastbtn").disabled=false;
+                    msg = "Hut to starting point.";
+                    updateDisplay (msg);
+                 }
+                 else if (currentLocation === start) {
+                    currentLocation = forest;
+                    document.getElementById("Northbtn").disabled=true;
+                    document.getElementById("Southbtn").disabled=true;
+                    document.getElementById("Westbtn").disabled=true;
+                    msg = "Starting point to forest.";
+                    if (!hasVisitedForest) {
+                       score = score + 5;
+                       hasVisitedForest = true;
+                    }
+                    updateDisplay (msg);
+                 }
+                 else {
+                    msg = "You can't go that way.";
+                    updateDisplay (msg);
+                 }
+              }
+              
+              else if (btnValue === SCORE || userInput === "Score" || userInput === "score") {
+                       userInputOk = true; 
+                 updateDisplay (score);
+              }
+              
+              if (!userInputOk) {
+                  msg = "Invalid command. Valid commands are:" + "\n" + "North:  North, north, N, n" + "\n" + "South: South, south, S, s" + "\n" + "East:   East, east, E, e" + "\n" + "West:  West, west, W, w" + "\n" + "Score: Score, score";
+                  updateDisplay (msg);
+              }
+           }
+            
+           function updateDisplay(message) {
+             var ta = document.getElementById("taGame");
+             ta.value = message + "\n" + "\n" + ta.value;
+           }
+          
+           
+          
+        </script>
+   </head>
+   <body>
+      <h1>S.O.S</h1>
+          
+      <textarea id="taGame" rows="8" cols="50">The pilot lost control of the plane that you were on. Everyone died in the crash, except for you. You are currently stranded on an unknown island. There are different items hidden throughout the island that are essential for your survival. As you embark on your journey through the island to search for these items, please be aware that there are mysterious creatures lurking around. Good luck! </textarea>
+      <br>
+      
+      <input type="text" id="txtInput"
+             name="Enter command"
+             value=""
+             size="50">
+                
+      <input type="button" 
+             value="Go"
+             onclick="btn_click(-1);"> 
+       
+      <br>
+      <br> 
+      
+      <input type="button" id="Northbtn"
+             value="North"
+             onclick="btn_click(NORTH);">
+             
+      <input type="button" id="Southbtn"
+             value="South"
+             onclick="btn_click(SOUTH)">
+                 
+      <input type="button" id="Eastbtn"
+             value="East"
+             onclick="btn_click(EAST)">
+                
+      <input type="button" id="Westbtn"
+             value="West"
+             onclick="btn_click(WEST)">
+                 
+      <input type="button"
+             value="Score"
+             onclick="btn_click(SCORE)">
+ 
+      <br> 
+      <hr>
+         <a href="mailto:Jennifer.Li1@marist.edu">Send e-mail.</a>
+   </body>
+</html>
