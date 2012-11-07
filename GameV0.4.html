@@ -213,7 +213,16 @@
              ta.value = message + "\n" + "\n" + ta.value;
            }
           
+           function listInventory () {
+              var div = " , ";
+              var invList = "";
+              var msg = "Inventory: " + inv1 + div + inv2 + div + inv3 + div + inv4;
+           }
            
+           function init () {
+              begText = "The pilot lost control of the plane that you were on. Everyone died in the crash, except for you. You are currently stranded on an unknown island. There are different items hidden throughout the island that are essential for your survival. As you embark on your journey through the island to search for these items, please be aware that there are mysterious creatures lurking around. Good luck!";
+              updateDisplay (begText);
+           }
           
         </script>
    </head>
