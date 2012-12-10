@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+    <!-- Jennifer Li
+    November 4, 2012
+    Introduction to Programming
+    Project 4: Game v0.6 -->
+    
+<!-- Page should be rendered on Google Chrome because the enter button does not work on Firefox. -->
+
+   <head>
+      <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+      <meta name="author" content="Jennifer Li" />
+      <title>S.O.S</title>
+      <style type = "text/css">
+          body { background-image: url('http://img.photobucket.com/albums/v259/jennstahmui/GameBg.jpg'); }
+          h1 { font-family: georgia;
+                     font-size: 25pt;
+                     color: white;
+                     background: black; }
+          textarea { font-family: arial;
+                     font-size: 11pt;}
+        </style>
+        <script type="text/JavaScript" src = "navigation.js">   
+        </script>
+        <script type="text/JavaScript" src = "locations.js">
+        </script>   
+        <script type="text/JavaScript" src = "gamelogic.js">   
+        </script>   
+   </head>
+
+   <body onload = "init();">
+      <h1>S.O.S</h1>
+          
+      <textarea id="taGame" rows="8" cols="50"></textarea>
+      <br>
+      
+      <input type="text" id="txtInput"
+             name="Enter command"
+             value=""
+             size="50"
+             onkeydown="btn_entered();"> 
+             
+      <input type="button" id="btnGo"
+             value="Go"
+             onclick="processCommand();"
+
+       
+      <br>
+      <br> 
+      
+      <input type="button" id="Northbtn"
+             value="North"
+             onclick="move(north);">
+             
+      <input type="button" id="Southbtn"
+             value="South"
+             onclick="move(south);">
+                 
+      <input type="button" id="Eastbtn"
+             value="East"
+             onclick="move(east);">
+                
+      <input type="button" id="Westbtn"
+             value="West"
+             onclick="move(west);">
+                 
+      <input type="button"
+             value="Score"
+             onclick="displayScore();">
+      
+      <input type="button"
+             value="Help"
+             onclick="displayHelp();">
+             
+       <input type="button"
+             value="Inventory"
+             onclick="displayInventory();">
+ 
+      <br>    
+      <hr>
+         <a href ="http://img.photobucket.com/albums/v259/jennstahmui/GameMap.jpg" border="0" alt="Photobucket"/>Need a map to get around?</a>
+         <br>
+         <a href="mailto:Jennifer.Li1@marist.edu">Send e-mail.</a>
+   </body>
+</html>
